@@ -50,13 +50,15 @@ var opts = {
 // ----------------------------
 
 gulp.task('createCSS', function() {
-  return gulp
-    .src(activatedAnimations)
-    .pipe(sourcemaps.init())
-    .pipe(concat(opts.concatName))
-    .pipe(postcss([autoprefixer(opts.autoprefixer)]))
-    .pipe(sourcemaps.write('./maps'))
-    .pipe(gulp.dest(opts.destPath));
+  return (
+    gulp
+      .src(activatedAnimations, {sourcemaps: true})
+      // .pipe(sourcemaps.init())
+      .pipe(concat(opts.concatName))
+      .pipe(postcss([autoprefixer(opts.autoprefixer)]))
+      // .pipe(sourcemaps.write(''))
+      .pipe(gulp.dest(opts.destPath))
+  );
   // .pipe(postcss([cssnano({reduceIdents: {keyframes: false}})]))
   // .pipe(rename(opts.minRename))
   // .pipe(gulp.dest(opts.destPath));
@@ -70,7 +72,7 @@ gulp.task('addHeader', function() {
 });
 
 gulp.task('default', gulp.series('createCSS'));
-
+gulp.series('createCSS')();
 // ----------------------------
 // Helpers/functions
 // ----------------------------
