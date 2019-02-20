@@ -2,6 +2,7 @@
 var autoprefixer = require('autoprefixer');
 var cssnano = require('cssnano');
 var fs = require('fs');
+var sourcemaps = require('gulp-sourcemaps');
 
 // Gulp
 var gulp = require('gulp');
@@ -20,7 +21,7 @@ var activatedAnimations = activateAnimations();
 
 // Task options
 var opts = {
-  destPath: './',
+  destPath: './debug',
   concatName: 'animate.css',
 
   autoprefixer: {
@@ -51,12 +52,14 @@ var opts = {
 gulp.task('createCSS', function() {
   return gulp
     .src(activatedAnimations)
+    .pipe(sourcemaps.init())
     .pipe(concat(opts.concatName))
     .pipe(postcss([autoprefixer(opts.autoprefixer)]))
-    .pipe(gulp.dest(opts.destPath))
-    .pipe(postcss([cssnano({reduceIdents: {keyframes: false}})]))
-    .pipe(rename(opts.minRename))
+    .pipe(sourcemaps.write('./maps'))
     .pipe(gulp.dest(opts.destPath));
+  // .pipe(postcss([cssnano({reduceIdents: {keyframes: false}})]))
+  // .pipe(rename(opts.minRename))
+  // .pipe(gulp.dest(opts.destPath));
 });
 
 gulp.task('addHeader', function() {
@@ -66,7 +69,7 @@ gulp.task('addHeader', function() {
     .pipe(gulp.dest(opts.destPath));
 });
 
-gulp.task('default', gulp.series('createCSS', 'addHeader'));
+gulp.task('default', gulp.series('createCSS'));
 
 // ----------------------------
 // Helpers/functions
