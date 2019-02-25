@@ -72,8 +72,8 @@ textarea {
 }
 
 .input--dropdown {
-  background-image: url('images/ddown.png');
-  background-image: url('images/ddown.svg?3'), none;
+  /* background-image: url('images/ddown.png');
+  background-image: url('images/ddown.svg?3'), none; */
   background-repeat: no-repeat;
   background-size: 1.5rem 1rem;
   background-position: right center;

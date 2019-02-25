@@ -52,11 +52,12 @@ var opts = {
 gulp.task('createCSS', function() {
   return (
     gulp
+      // .src(activatedAnimations, {sourcemaps: true})
       .src(activatedAnimations, {sourcemaps: true})
-      // .pipe(sourcemaps.init())
+      .pipe(sourcemaps.init())
       .pipe(concat(opts.concatName))
       .pipe(postcss([autoprefixer(opts.autoprefixer)]))
-      // .pipe(sourcemaps.write(''))
+      .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(opts.destPath))
   );
   // .pipe(postcss([cssnano({reduceIdents: {keyframes: false}})]))
